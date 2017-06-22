@@ -70,8 +70,8 @@ class BayeuxMessageReceiver(Protocol):
                 if 'channel' in msg:
                     self.notify(msg['channel'], msg)
         except ValueError as e:
-            print 'Error parsing data: ', self.buf
-            print e
+            print('Error parsing data: {}'.format(self.buf))
+            print(e)
         self.buf = ''
 
     def notify(self, event, data):

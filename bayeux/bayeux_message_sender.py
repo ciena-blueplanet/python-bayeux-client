@@ -1,14 +1,14 @@
-import bayeux_constants
+from bayeux import bayeux_constants
 import logging
 
-from cookielib import CookieJar
+from six.moves.http_cookiejar import CookieJar
 
 from twisted.internet import defer, reactor
 from twisted.internet.defer import succeed
 from twisted.web.client import Agent, CookieAgent, HTTPConnectionPool
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import IBodyProducer
-from zope.interface import implements
+from zope.interface import implementer
 import pprint
 import copy
 
@@ -183,8 +183,9 @@ class BayeuxMessageSender(object):
         logging.debug('unsubscribe: %s' % message)
         self.send_message(message, errback)
 
+
+@implementer(IBodyProducer)
 class BayeuxProducer(object):
-    implements(IBodyProducer)
     """Producer class used by the BayeuxMessageSender to write data.
 
     Attributes:
